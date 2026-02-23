@@ -5,7 +5,7 @@ services:
     ports:
       - "9090:9090"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5555/stats_db
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db::5432/stats
       - SPRING_DATASOURCE_USERNAME=stats_db_user
       - SPRING_DATASOURCE_PASSWORD=password
     healthcheck:
@@ -21,9 +21,9 @@ services:
     image: postgres:16.1
     container_name: stats-db
     ports:
-      - "5433:5555"
+      - "5433:5432"
     environment:
-      - POSTGRES_DB=stats_db
+      - POSTGRES_DB=stats
       - POSTGRES_USER=stats_db_user
       - POSTGRES_PASSWORD=password
     volumes:
@@ -40,7 +40,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5555/ewm
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/ewm
       - SPRING_DATASOURCE_USERNAME=ewm_user
       - SPRING_DATASOURCE_PASSWORD=password
     depends_on:
@@ -53,7 +53,7 @@ services:
     image: postgres:16.1
     container_name: ewm-db
     ports:
-      - "5555:5555"
+      - "5432:5432"
     environment:
       - POSTGRES_DB=ewm
       - POSTGRES_USER=ewm_user

@@ -1,14 +1,67 @@
 services:
   stats-server:
+    build: ./stats-service/server
+    container_name: server
     ports:
       - "9090:9090"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5555/stats_db
+      - SPRING_DATASOURCE_USERNAME=stats_db_user
+      - SPRING_DATASOURCE_PASSWORD=password
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9090/actuator" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    depends_on:
+      stats-db:
+        condition: service_healthy
 
   stats-db:
     image: postgres:16.1
+    container_name: stats-db
+    ports:
+      - "5433:5555"
+    environment:
+      - POSTGRES_DB=stats_db
+      - POSTGRES_USER=stats_db_user
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - ./volumes/stats_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -q -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   ewm-service:
+    build: ./main-service
+    container_name: ewm-service
     ports:
       - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5555/ewm
+      - SPRING_DATASOURCE_USERNAME=ewm_user
+      - SPRING_DATASOURCE_PASSWORD=password
+    depends_on:
+      ewm-db:
+        condition: service_healthy
+      stats-server:
+        condition: service_healthy
 
   ewm-db:
     image: postgres:16.1
+    container_name: ewm-db
+    ports:
+      - "5555:5555"
+    environment:
+      - POSTGRES_DB=ewm
+      - POSTGRES_USER=ewm_user
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - ./volumes/ewm_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -q -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 10s
+      timeout: 5s
+      retries: 5

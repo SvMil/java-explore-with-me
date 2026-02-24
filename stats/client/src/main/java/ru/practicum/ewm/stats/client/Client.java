@@ -5,17 +5,15 @@ import org.springframework.web.util.UriComponentsBuilder;
 import ru.practicum.ewm.stats.dto.HitEndpointDto;
 import ru.practicum.ewm.stats.dto.StatsViewDto;
 import org.springframework.core.ParameterizedTypeReference;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@RequiredArgsConstructor
 public class Client {
-    private final RestClient restClient;
-
-    public Client(RestClient restClient) {
-        this.restClient = restClient;
-    }
+    private RestClient restClient;
 
     public List<StatsViewDto> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
         if (start == null || end == null) {

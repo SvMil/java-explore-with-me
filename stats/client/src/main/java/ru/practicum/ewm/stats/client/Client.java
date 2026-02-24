@@ -4,6 +4,7 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriComponentsBuilder;
 import ru.practicum.ewm.stats.dto.HitEndpointDto;
 import ru.practicum.ewm.stats.dto.StatsViewDto;
+import ru.practicum.ewm.stats.dto.DateTimeFormats;
 import org.springframework.core.ParameterizedTypeReference;
 import lombok.RequiredArgsConstructor;
 
@@ -26,8 +27,8 @@ public class Client {
 
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder
                 .fromPath("/stats")
-                .queryParam("start", start.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
-                .queryParam("end", end.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+                .queryParam("start", start.format(DateTimeFormatter.ofPattern(DateTimeFormats.FORMATTER)))
+                .queryParam("end", end.format(DateTimeFormatter.ofPattern(DateTimeFormats.FORMATTER)));
 
         if (uris != null && !uris.isEmpty()) {
             uriComponentsBuilder.queryParam("uris", uris);

@@ -5,6 +5,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import ru.practicum.ewm.stats.dto.HitEndpointDto;
 import ru.practicum.ewm.stats.dto.StatsViewDto;
 import ru.practicum.ewm.stats.dto.DateTimeFormats;
+import ru.practicum.ewm.stats.client.ClientRequestDto;
 import org.springframework.core.ParameterizedTypeReference;
 import lombok.RequiredArgsConstructor;
 

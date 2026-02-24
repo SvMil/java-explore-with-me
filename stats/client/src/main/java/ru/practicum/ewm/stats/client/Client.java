@@ -45,9 +45,9 @@ public class Client {
                 .body(new ParameterizedTypeReference<List<StatsViewDto>>() {});
     }
 
-    public void addHit(HitEndpointDto HitEndpointDto) {
+    public void addHit(HitEndpointDto hitEndpointDto) {
         restClient.post().uri("/hit")
-                .body(HitEndpointDto)
+                .body(hitEndpointDto)
                 .retrieve()
                 .toBodilessEntity();
     }

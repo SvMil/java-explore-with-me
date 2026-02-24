@@ -10,10 +10,10 @@ import java.util.List;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class StatsClient {
+public class Client {
     private final RestClient restClient;
 
-    public StatsClient(RestClient restClient) {
+    public Client(RestClient restClient) {
         this.restClient = restClient;
     }
 

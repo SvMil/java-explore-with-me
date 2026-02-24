@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class EndpointHitMapper {
 
-    public EndpointHit toEntity(HitEndpointDto dto) {
-        return new EndpointHit(
+    public ru.practicum.ewm.stats.EndpointHit toEntity(HitEndpointDto dto) {
+        return new ru.practicum.ewm.stats.EndpointHit(
                 dto.getApp(),
                 dto.getUri(),
                 dto.getIp(),
@@ -15,7 +15,7 @@ public class EndpointHitMapper {
         );
     }
 
-    public HitEndpointDto toDto(EndpointHit entity) {
+    public HitEndpointDto toDto(ru.practicum.ewm.stats.EndpointHit entity) {
         return new HitEndpointDto(
                 entity.getId(),
                 entity.getApp(),

@@ -26,8 +26,8 @@ public class StatsServiceImpl implements StatsService {
 
     @Override
     @Transactional
-    public HitEndpointDto addHit(HitEndpointDto HitEndpointDto) {
-        EndpointHit saved = statsRepository.save(mapper.toEntity(HitEndpointDto));
+    public HitEndpointDto addHit(HitEndpointDto hitEndpointDto) {
+        EndpointHit saved = statsRepository.save(mapper.toEntity(hitEndpointDto));
         return mapper.toDto(saved);
     }
 }

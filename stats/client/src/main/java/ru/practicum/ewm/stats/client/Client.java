@@ -5,7 +5,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import ru.practicum.ewm.stats.dto.HitEndpointDto;
 import ru.practicum.ewm.stats.dto.StatsViewDto;
 import ru.practicum.ewm.stats.dto.DateTimeFormats;
-import ru.practicum.ewm.stats.client.ClientRequestDto;
+import ru.practicum.ewm.stats.dto.ClientRequestDto;
 import org.springframework.core.ParameterizedTypeReference;
 import lombok.RequiredArgsConstructor;
 
@@ -16,23 +16,23 @@ import java.time.format.DateTimeFormatter;
 public class Client {
     private RestClient restClient;
 
-    public List<StatsViewDto> getStats(ClientRequestDto сlientRequestDto) {
+    public List<StatsViewDto> getStats(ClientRequestDto clientRequestDto) {
 
-        if (сlientRequestDto.getEnd().isBefore(сlientRequestDto.getStart())) {
+        if (clientRequestDto.getEnd().isBefore(clientRequestDto.getStart())) {
             throw new IllegalArgumentException("Ошибка валидации. Дата окончания не может быть раньше даты начала");
         }
 
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder
                 .fromPath("/stats")
-                .queryParam("start", сlientRequestDto.getStart().format(DateTimeFormatter.ofPattern(DateTimeFormats.FORMATTER)))
-                .queryParam("end", сlientRequestDto.getEnd().format(DateTimeFormatter.ofPattern(DateTimeFormats.FORMATTER)));
+                .queryParam("start", clientRequestDto.getStart().format(DateTimeFormatter.ofPattern(DateTimeFormats.FORMATTER)))
+                .queryParam("end", clientRequestDto.getEnd().format(DateTimeFormatter.ofPattern(DateTimeFormats.FORMATTER)));
 
-        if (сlientRequestDto.getUris() != null && !сlientRequestDto.getUris().isEmpty()) {
-            uriComponentsBuilder.queryParam("uris", сlientRequestDto.getUris());
+        if (clientRequestDto.getUris() != null && !clientRequestDto.getUris().isEmpty()) {
+            uriComponentsBuilder.queryParam("uris", clientRequestDto.getUris());
         }
 
-        if (сlientRequestDto.getUnique() != null) {
-            uriComponentsBuilder.queryParam("unique", сlientRequestDto.getUnique());
+        if (clientRequestDto.getUnique() != null) {
+            uriComponentsBuilder.queryParam("unique", clientRequestDto.getUnique());
         }
 
         return restClient.get()

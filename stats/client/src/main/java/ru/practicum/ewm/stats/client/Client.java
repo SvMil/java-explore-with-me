@@ -1,7 +1,11 @@
 package ru.practicum.ewm.stats.client;
 
 import lombok.Data;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.util.UriComponentsBuilder;
 import ru.practicum.ewm.stats.dto.HitEndpointDto;
 import ru.practicum.ewm.stats.dto.StatsViewDto;
@@ -15,6 +19,7 @@ import java.time.format.DateTimeFormatter;
 @Data
 public class Client {
     private RestClient restClient;
+    private static final Logger log = LoggerFactory.getLogger(Client.class);
 
     public Client(RestClient restClient) {
         this.restClient = restClient;
@@ -46,9 +51,15 @@ public class Client {
     }
 
     public void addHit(HitEndpointDto hitEndpointDto) {
+        try {
         restClient.post().uri("/hit")
                 .body(hitEndpointDto)
                 .retrieve()
                 .toBodilessEntity();
+        } catch (ResourceAccessException e) {
+            log.warn("Сервис статистики недоступен: {}", e.getMessage());
+        } catch (RestClientException e) {
+            log.error("Ошибка отправки статистики: {}", e.getMessage());
+        }
     }
 }

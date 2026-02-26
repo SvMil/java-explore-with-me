@@ -2,7 +2,6 @@ package ru.practicum.ewm.category;
 
 
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
 import lombok.RequiredArgsConstructor;
 import ru.practicum.ewm.category.service.CategoryService;
 import ru.practicum.ewm.category.dto.CategoryDto;

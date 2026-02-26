@@ -1,5 +1,6 @@
 package ru.practicum.ewm.stats.client;
 
+import lombok.Data;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriComponentsBuilder;
 import ru.practicum.ewm.stats.dto.HitEndpointDto;
@@ -7,14 +8,17 @@ import ru.practicum.ewm.stats.dto.StatsViewDto;
 import ru.practicum.ewm.stats.dto.DateTimeFormats;
 import ru.practicum.ewm.stats.dto.ClientRequestDto;
 import org.springframework.core.ParameterizedTypeReference;
-import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.time.format.DateTimeFormatter;
 
-@RequiredArgsConstructor
+@Data
 public class Client {
     private RestClient restClient;
+
+    public Client(RestClient restClient) {
+        this.restClient = restClient;
+    }
 
     public List<StatsViewDto> getStats(ClientRequestDto clientRequestDto) {
 

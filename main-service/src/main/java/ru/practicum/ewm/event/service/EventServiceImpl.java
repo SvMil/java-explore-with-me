@@ -95,12 +95,12 @@ public class EventServiceImpl implements EventService {
 
         if (dto.getStateAction() != null) {
             switch (dto.getStateAction()) {
-                case REJECT_EVENT:
+                case REJECT:
                     validatePending(event, "Отклонить можно только мероприятия в статусе ожидания");
                     event.setState(EventState.CANCELED);
                     break;
 
-                case PUBLISH_EVENT:
+                case PUBLISH:
                     validatePending(event, "Публикация доступна только для мероприятий в статусе ожидания");
                     event.setState(EventState.PUBLISHED);
                     event.setPublishedOn(LocalDateTime.now());

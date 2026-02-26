@@ -2,7 +2,7 @@ package ru.practicum.ewm.event;
 
 import lombok.RequiredArgsConstructor;
 import jakarta.validation.Valid;
-import ru.practicum.ewm.request.dto.ParticipationRequest;
+import ru.practicum.ewm.request.dto.RequestParticipationDto;
 import ru.practicum.ewm.request.service.RequestService;
 import ru.practicum.ewm.event.dto.*;
 import ru.practicum.ewm.event.service.EventService;
@@ -37,7 +37,7 @@ public class EventControllerPrivate {
 
     @GetMapping("/{eventId}/requests")
     @ResponseStatus(HttpStatus.OK)
-    public List<ParticipationRequest> getEventRequests(
+    public List<RequestParticipationDto> getEventRequests(
             @PathVariable long userId,
             @PathVariable long eventId
     ) {

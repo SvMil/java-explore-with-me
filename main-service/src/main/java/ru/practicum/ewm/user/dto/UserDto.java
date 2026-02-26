@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 @Data
 @AllArgsConstructor
@@ -13,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class UserDto {
 
     @Email
-    @Size(max = 254)
+    @Length(max = 254)
     private String email;
     private Long id;
 

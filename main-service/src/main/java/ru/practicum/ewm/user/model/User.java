@@ -1,5 +1,6 @@
 package ru.practicum.ewm.user.model;
 
+import jakarta.validation.Valid;
 import lombok.*;
 import jakarta.persistence.*;
 
@@ -7,6 +8,7 @@ import jakarta.persistence.*;
 @Entity
 @Setter
 @Getter
+@Valid
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {

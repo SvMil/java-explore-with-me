@@ -10,7 +10,7 @@ import ru.practicum.ewm.user.model.User;
 import ru.practicum.ewm.user.dto.UserDto;
 import ru.practicum.ewm.user.mapper.UserMapper;
 import ru.practicum.ewm.user.repository.UserRepository;
-import ru.practicum.ewm.request.dto.CreateUserRequest;
+import ru.practicum.ewm.request.dto.CreateRequestDto;
 import ru.practicum.ewm.exception.ConflictException;
 import ru.practicum.ewm.exception.NotFoundException;
 
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDto create(CreateUserRequest dto) {
+    public UserDto create(CreateRequestDto dto) {
         if (userRepository.existsByEmail(dto.getEmail())) {
             throw new ConflictException("Пользователь с заданным email уже есть в базе");
         }

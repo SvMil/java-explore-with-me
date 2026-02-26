@@ -131,18 +131,4 @@ public class ErrorHandler {
         log.error(e.getMessage());
         return Map.of("error", e.getMessage());
     }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> handleMethodNotValidException(MethodArgumentNotValidException e) {
-        log.error(e.getMessage());
-        return Map.of("error", e.getMessage());
-    }
-
-    @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> handleConstraintViolationException(ConstraintViolationException e) {
-        log.error(e.getMessage());
-        return Map.of("error", e.getMessage());
-    }
 }

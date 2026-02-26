@@ -9,6 +9,8 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.multipart.MultipartException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -84,6 +86,29 @@ public class ErrorHandler {
         return ApiError.builder()
                 .message(e.getMessage())
                 .reason("Неверные параметры запроса")
+                .status(HttpStatus.BAD_REQUEST.name())
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
+
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleMaxUploadSizeExceeded(final MaxUploadSizeExceededException e) {
+        return ApiError.builder()
+                .message(e.getMessage())
+                .reason("Превышение размера поля")
+                .status(HttpStatus.BAD_REQUEST.name())
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
+
+    @ExceptionHandler(MultipartException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleMultipartException(final MultipartException e) {
+        return ApiError.builder()
+                .message(e.getMessage())
+                .reason("Превышение размера поля")
                 .status(HttpStatus.BAD_REQUEST.name())
                 .timestamp(LocalDateTime.now())
                 .build();

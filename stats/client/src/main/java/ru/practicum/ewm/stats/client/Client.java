@@ -7,6 +7,7 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.util.UriComponentsBuilder;
+import ru.practicum.ewm.stats.dto.DateTimeFormats;
 import ru.practicum.ewm.stats.dto.HitEndpointDto;
 import ru.practicum.ewm.stats.dto.StatsViewDto;
 
@@ -30,13 +31,13 @@ public class Client {
         }
 
         if (end.isBefore(start)) {
-            throw new IllegalArgumentException("Даты окончания должна быть позже даты начала");
+            throw new IllegalArgumentException("Ошибка валидации. Дата окончания не может быть раньше даты начала");
         }
 
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder
                 .fromPath("/stats")
-                .queryParam("start", start.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
-                .queryParam("end", end.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+                .queryParam("start", start.format(DateTimeFormatter.ofPattern(DateTimeFormats.FORMATTER)))
+                .queryParam("end", end.format(DateTimeFormatter.ofPattern(DateTimeFormats.FORMATTER)));
 
         if (uris != null && !uris.isEmpty()) {
             uriComponentsBuilder.queryParam("uris", uris);

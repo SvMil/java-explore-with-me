@@ -24,7 +24,6 @@ import ru.practicum.ewm.category.repository.CategoryRepository;
 import ru.practicum.ewm.request.repository.RequestRepository;
 import ru.practicum.ewm.user.repository.UserRepository;
 import ru.practicum.ewm.stats.client.Client;
-import ru.practicum.ewm.stats.dto.ClientRequestDto;
 import ru.practicum.ewm.stats.dto.HitEndpointDto;
 import ru.practicum.ewm.stats.dto.StatsViewDto;
 

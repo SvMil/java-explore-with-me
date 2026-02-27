@@ -468,7 +468,6 @@ public class EventServiceImpl implements EventService {
                 .toList();
 
         LocalDateTime start = events.stream()
-//                .map(Event::getCreatedOn)
                 .map(event -> {
                     if (event.getPublishedOn() != null) {
                         return event.getPublishedOn();
@@ -490,7 +489,7 @@ public class EventServiceImpl implements EventService {
                             StatsViewDto::getHits
                     ));
         } catch (Exception e) {
-            log.warn("Ошибка при получении статистики просмотров", e);
+            log.warn("Ошибка получения статистики просмотров", e);
             return Collections.emptyMap();
         }
     }

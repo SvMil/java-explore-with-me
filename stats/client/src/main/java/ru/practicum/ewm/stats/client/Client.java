@@ -24,23 +24,6 @@ public class Client {
         this.restClient = restClient;
     }
 
-    public void saveHit(HitEndpointDto endpointHitDto) {
-        try {
-            restClient.post().uri("/hit")
-                    .body(endpointHitDto)
-                    .retrieve()
-                    .toBodilessEntity();
-        } catch (ResourceAccessException e) {
-            log.warn("Сервис статистики недоступен: {}", e.getMessage());
-        } catch (RestClientException e) {
-            log.error("Ошибка при отправке статистики: {}", e.getMessage());
-//        restClient.post().uri("/hit")
-//                    .body(endpointHitDto)
-//                    .retrieve()
-//                    .toBodilessEntity();
-        }
-    }
-
     public List<StatsViewDto> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
         if (start == null || end == null) {
             throw new IllegalArgumentException("Даты начала и окончания должны быть заданы");
@@ -67,5 +50,18 @@ public class Client {
                 .uri(uriComponentsBuilder.build().toUriString())
                 .retrieve()
                 .body(new ParameterizedTypeReference<List<StatsViewDto>>() {});
+    }
+
+    public void saveHit(HitEndpointDto endpointHitDto) {
+        try {
+            restClient.post().uri("/hit")
+                    .body(endpointHitDto)
+                    .retrieve()
+                    .toBodilessEntity();
+        } catch (ResourceAccessException e) {
+            log.warn("Сервис статистики недоступен: {}", e.getMessage());
+        } catch (RestClientException e) {
+            log.error("Ошибка при отправке статистики: {}", e.getMessage());
+        }
     }
 }

@@ -19,6 +19,7 @@ import ru.practicum.ewm.exception.ForbiddenException;
 import ru.practicum.ewm.exception.NotFoundException;
 import ru.practicum.ewm.exception.ValidationException;
 import ru.practicum.ewm.category.model.Category;
+import ru.practicum.ewm.stats.dto.ClientRequestDto;
 import ru.practicum.ewm.user.model.User;
 import ru.practicum.ewm.category.repository.CategoryRepository;
 import ru.practicum.ewm.request.repository.RequestRepository;
@@ -481,7 +482,7 @@ public class EventServiceImpl implements EventService {
                 .orElse(LocalDateTime.now());
 
         try {
-            List<StatsViewDto> stats = statsClient.getStats(start, LocalDateTime.now(), uris, true);
+            List<StatsViewDto> stats = statsClient.getStats(new ClientRequestDto (start, LocalDateTime.now(), uris, true));
 
             return stats.stream()
                     .collect(Collectors.toMap(

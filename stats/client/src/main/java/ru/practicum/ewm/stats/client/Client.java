@@ -7,6 +7,7 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.util.UriComponentsBuilder;
+import ru.practicum.ewm.stats.dto.ClientRequestDto;
 import ru.practicum.ewm.stats.dto.DateTimeFormats;
 import ru.practicum.ewm.stats.dto.HitEndpointDto;
 import ru.practicum.ewm.stats.dto.StatsViewDto;
@@ -25,26 +26,26 @@ public class Client {
         this.restClient = restClient;
     }
 
-    public List<StatsViewDto> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
-        if (start == null || end == null) {
+    public List<StatsViewDto> getStats(ClientRequestDto clientRequestDto) {
+        if (clientRequestDto.getStart() == null || clientRequestDto.getEnd() == null) {
             throw new IllegalArgumentException("Даты начала и окончания должны быть заданы");
         }
 
-        if (end.isBefore(start)) {
+        if (clientRequestDto.getEnd().isBefore(clientRequestDto.getStart())) {
             throw new IllegalArgumentException("Ошибка валидации. Дата окончания не может быть раньше даты начала");
         }
 
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder
                 .fromPath("/stats")
-                .queryParam("start", start.format(DateTimeFormatter.ofPattern(DateTimeFormats.FORMATTER)))
-                .queryParam("end", end.format(DateTimeFormatter.ofPattern(DateTimeFormats.FORMATTER)));
+                .queryParam("start", clientRequestDto.getStart().format(DateTimeFormatter.ofPattern(DateTimeFormats.FORMATTER)))
+                .queryParam("end", clientRequestDto.getEnd().format(DateTimeFormatter.ofPattern(DateTimeFormats.FORMATTER)));
 
-        if (uris != null && !uris.isEmpty()) {
-            uriComponentsBuilder.queryParam("uris", uris);
+        if (clientRequestDto.getUris() != null && !clientRequestDto.getUris().isEmpty()) {
+            uriComponentsBuilder.queryParam("uris", clientRequestDto.getUris());
         }
 
-        if (unique != null) {
-            uriComponentsBuilder.queryParam("unique", unique);
+        if (clientRequestDto.getUnique() != null) {
+            uriComponentsBuilder.queryParam("unique", clientRequestDto.getUnique());
         }
 
         return restClient.get()

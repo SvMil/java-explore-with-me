@@ -451,7 +451,7 @@ public class EventServiceImpl implements EventService {
         hit.setIp(request.getRemoteAddr());
         hit.setApp("ewm-main-service");
         hit.setUri(request.getRequestURI());
-        statsClient.addHit(hit);
+        statsClient.saveHit(hit);
     }
 
     private long getConfirmedRequests(Long eventId) {
@@ -468,6 +468,7 @@ public class EventServiceImpl implements EventService {
                 .toList();
 
         LocalDateTime start = events.stream()
+//                .map(Event::getCreatedOn)
                 .map(event -> {
                     if (event.getPublishedOn() != null) {
                         return event.getPublishedOn();
@@ -481,12 +482,7 @@ public class EventServiceImpl implements EventService {
                 .orElse(LocalDateTime.now());
 
         try {
-            ClientRequestDto clientReques = new ClientRequestDto();
-            clientReques.setUris(uris);
-            clientReques.setUnique(true);
-            clientReques.setStart(start);
-            clientReques.setEnd(LocalDateTime.now());
-            List<StatsViewDto> stats = statsClient.getStats(clientReques);
+            List<StatsViewDto> stats = statsClient.getStats(start, LocalDateTime.now(), uris, true);
 
             return stats.stream()
                     .collect(Collectors.toMap(
@@ -494,7 +490,7 @@ public class EventServiceImpl implements EventService {
                             StatsViewDto::getHits
                     ));
         } catch (Exception e) {
-            log.warn("Ошибка получения статистики", e);
+            log.warn("Ошибка при получении статистики просмотров", e);
             return Collections.emptyMap();
         }
     }

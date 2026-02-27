@@ -49,6 +49,7 @@ public class EventServiceImpl implements EventService {
     private final UserRepository userRepository;
     private final EventMapper mapper;
 
+
     @Override
     public List<FullEventDto> getAdminEvents(EventSearchParamsAdmin params) {
         Pageable pageable = PageRequest.of(

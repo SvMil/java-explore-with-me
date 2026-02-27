@@ -482,7 +482,7 @@ public class EventServiceImpl implements EventService {
                 .orElse(LocalDateTime.now());
 
         try {
-            List<StatsViewDto> stats = statsClient.getStats(new ClientRequestDto (start, LocalDateTime.now(), uris, true));
+            List<StatsViewDto> stats = statsClient.getStats(new ClientRequestDto(start, LocalDateTime.now(), uris, true));
 
             return stats.stream()
                     .collect(Collectors.toMap(

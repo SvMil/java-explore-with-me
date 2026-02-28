@@ -1,5 +1,6 @@
 package ru.practicum.ewm.exception;
 
+import jakarta.persistence.PersistenceException;
 import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -155,4 +156,21 @@ public class ErrorHandler {
         log.error(e.getMessage());
         return Map.of("error", e.getMessage());
     }
+
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public Map<String, String> handleDataIntegrityViolationException(DataIntegrityViolationException e) {
+        log.error(e.getMessage());
+        return Map.of("error", e.getMessage());
+    }
+
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public Map<String, String> handlePersistenceException(PersistenceException e) {
+        log.error(e.getMessage());
+        return Map.of("error", e.getMessage());
+    }
+
 }

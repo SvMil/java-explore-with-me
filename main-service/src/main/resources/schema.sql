@@ -7,7 +7,8 @@ DROP TABLE IF EXISTS categories;
 
 CREATE TABLE IF NOT EXISTS categories (
     id   BIGSERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL UNIQUE
+    name VARCHAR(50) NOT NULL,
+    CONSTRAINT uq_category_name UNIQUE (name)
 );
 
 CREATE TABLE IF NOT EXISTS users (

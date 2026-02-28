@@ -17,16 +17,14 @@ public class CategoryControllerAll {
 
     @GetMapping("/{catId}")
     public CategoryDto getCategoryById(
-            @PathVariable long catId
-    ) {
+            @PathVariable long catId) {
         return service.getById(catId);
     }
 
     @GetMapping
     public List<CategoryDto> getCategories(
             @RequestParam(defaultValue = "0") int from,
-            @RequestParam(defaultValue = "10") int size
-    ) {
+            @RequestParam(defaultValue = "10") int size) {
         return service.getAll(from, size);
     }
 }

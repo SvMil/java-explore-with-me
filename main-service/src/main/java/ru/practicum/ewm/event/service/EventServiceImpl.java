@@ -222,14 +222,6 @@ public class EventServiceImpl implements EventService {
         int size = params.getSize();
         int from = params.getFrom();
 
-        if (size <= 0) {
-            size = 10;
-        }
-
-        if (from < 0) {
-            from = 10;
-        }
-
         Pageable pageable = PageRequest.of(from / size, size);
 
         List<Long> categories = params.getCategories();

@@ -250,7 +250,7 @@ public class EventServiceImpl implements EventService {
                     params.getPaid(),
                     params.getRangeStart(),
                     params.getRangeEnd(),
-                    "PUBLISHED",
+                    EventState.PUBLISHED.toString(),
                     pageable
             );
         } else {
@@ -260,7 +260,7 @@ public class EventServiceImpl implements EventService {
                     params.getPaid(),
                     params.getRangeStart(),
                     params.getRangeEnd(),
-                    "PUBLISHED",
+                    EventState.PUBLISHED.toString(),
                     pageable
             );
         }

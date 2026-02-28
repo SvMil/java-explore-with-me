@@ -77,17 +77,4 @@ public class Client {
             log.error("Ошибка при отправке статистики: {}", e.getMessage());
         }
     }
-
-    public void addHit(HitEndpointDto endpointHitDto) {
-        try {
-            restClient.post().uri("/hit")
-                    .body(endpointHitDto)
-                    .retrieve()
-                    .toBodilessEntity();
-        } catch (ResourceAccessException e) {
-            log.warn("Сервис статистики недоступен: {}", e.getMessage());
-        } catch (RestClientException e) {
-            log.error("Ошибка при отправке статистики: {}", e.getMessage());
-        }
-    }
 }

@@ -280,9 +280,7 @@ public class EventServiceImpl implements EventService {
 
         Map<Long, Long> views = getViews(events);
         log.debug("Views loaded for {} events", views.size());
-
         Stream<Event> stream = events.stream();
-
         EventSort eventSort;
 
         if (params.getSort() == null || params.getSort().isBlank()) {

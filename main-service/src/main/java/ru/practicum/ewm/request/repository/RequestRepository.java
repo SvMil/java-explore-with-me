@@ -20,9 +20,6 @@ public interface RequestRepository extends JpaRepository<Request, Long> {
 
     List<Request> findByEventId(Long eventId);
 
-    @Query("SELECT r FROM Request r " +
-            "JOIN r.event e " +
-            "WHERE e.initiator.id = :initiatorId")
     List<Request> findByEventInitiatorId(Long initiatorId);
 
     long countByEventIdAndStatus(Long eventId, RequestStatus status);

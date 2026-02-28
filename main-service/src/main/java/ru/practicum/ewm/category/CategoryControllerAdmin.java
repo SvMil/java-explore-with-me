@@ -22,6 +22,7 @@ public class CategoryControllerAdmin {
     }
 
     @PatchMapping("/{catId}")
+    @ResponseStatus(HttpStatus.OK)
     public CategoryDto updateCategory(
             @PathVariable long catId,
             @RequestBody @Valid CategoryDto dto) {
@@ -33,5 +34,4 @@ public class CategoryControllerAdmin {
     public void deleteCategory(@PathVariable long catId) {
         service.delete(catId);
     }
-
 }

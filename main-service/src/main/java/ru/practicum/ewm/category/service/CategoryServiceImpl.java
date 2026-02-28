@@ -65,6 +65,9 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = findById(id);
 
         String newName = dto.getName();
+        if (!category.getName().equals(newName) && categoryRepository.existsByName(newName)) {
+            throw new ConflictException("Категория с заданным именем уже существует");
+        }
 
         category.setName(newName);
         return mapper.toDto(categoryRepository.save(category));

@@ -157,20 +157,10 @@ public class ErrorHandler {
         return Map.of("error", e.getMessage());
     }
 
-
-    @ExceptionHandler
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public Map<String, String> handleDataIntegrityViolationException(DataIntegrityViolationException e) {
-        log.error(e.getMessage());
-        return Map.of("error", e.getMessage());
-    }
-
-
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
     public Map<String, String> handlePersistenceException(PersistenceException e) {
         log.error(e.getMessage());
         return Map.of("error", e.getMessage());
     }
-
 }

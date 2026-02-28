@@ -44,11 +44,6 @@ public class CategoryServiceImpl implements CategoryService {
         return mapper.toDto(findById(id));
     }
 
-    private Category findById(Long id) {
-        return categoryRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Категория с заданным id не найдена"));
-    }
-
     @Override
     @Transactional
     public CategoryDto create(CreateCategoryDto dto) {
@@ -88,5 +83,10 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
         categoryRepository.delete(category);
+    }
+
+    private Category findById(Long id) {
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Категория с заданным id не найдена"));
     }
 }

@@ -1,6 +1,8 @@
 package ru.practicum.ewm.event;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import ru.practicum.ewm.event.dto.FullEventDto;
 import ru.practicum.ewm.event.service.EventService;
@@ -35,8 +37,8 @@ public class EventControllerPublic {
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeEnd,
             @RequestParam(defaultValue = "false") Boolean onlyAvailable,
             @RequestParam(required = false) String sort,
-            @RequestParam(defaultValue = "0") int from,
-            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "0") @PositiveOrZero int from,
+            @RequestParam(defaultValue = "10") @Positive int size,
             HttpServletRequest request
     ) {
         List<EventShortDto> result = service.getPublicEvents(new EvenSearchParamsAll(

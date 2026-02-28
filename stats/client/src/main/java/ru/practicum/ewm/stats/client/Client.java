@@ -1,7 +1,9 @@
 package ru.practicum.ewm.stats.client;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClient;
@@ -12,6 +14,7 @@ import ru.practicum.ewm.stats.dto.DateTimeFormats;
 import ru.practicum.ewm.stats.dto.HitEndpointDto;
 import ru.practicum.ewm.stats.dto.StatsViewDto;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -20,6 +23,9 @@ public class Client {
     private static final Logger log = LoggerFactory.getLogger(Client.class);
 
     private final RestClient restClient;
+
+    @Value("${app.name:ewm-main-service}")
+    private String appName;
 
     public Client(RestClient restClient) {
         this.restClient = restClient;
@@ -53,7 +59,26 @@ public class Client {
                 .body(new ParameterizedTypeReference<List<StatsViewDto>>() {});
     }
 
-    public void saveHit(HitEndpointDto endpointHitDto) {
+    public void saveHit(HttpServletRequest request) {
+        HitEndpointDto hit = new HitEndpointDto();
+        hit.setTimestamp(LocalDateTime.now());
+        hit.setIp(request.getRemoteAddr());
+        hit.setApp(appName);
+        hit.setUri(request.getRequestURI());
+
+        try {
+            restClient.post().uri("/hit")
+                    .body(hit)
+                    .retrieve()
+                    .toBodilessEntity();
+        } catch (ResourceAccessException e) {
+            log.warn("Сервис статистики недоступен: {}", e.getMessage());
+        } catch (RestClientException e) {
+            log.error("Ошибка при отправке статистики: {}", e.getMessage());
+        }
+    }
+
+    public void addHit(HitEndpointDto endpointHitDto) {
         try {
             restClient.post().uri("/hit")
                     .body(endpointHitDto)

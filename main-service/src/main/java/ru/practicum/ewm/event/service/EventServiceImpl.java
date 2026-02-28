@@ -436,12 +436,16 @@ public class EventServiceImpl implements EventService {
     }
 
     private void logHit(HttpServletRequest request) {
+        statsClient.saveHit(request);
+    }
+
+    private void logHit2(HttpServletRequest request) {
         HitEndpointDto hit = new HitEndpointDto();
         hit.setTimestamp(LocalDateTime.now());
         hit.setIp(request.getRemoteAddr());
         hit.setApp("ewm-main-service");
         hit.setUri(request.getRequestURI());
-        statsClient.saveHit(hit);
+        statsClient.addHit(hit);
     }
 
     private long getConfirmedRequests(Long eventId) {
